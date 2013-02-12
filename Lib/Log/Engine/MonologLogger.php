@@ -90,7 +90,7 @@ class MonologLogger implements CakeLogInterface {
 				break;
 
 				default:
-					$this->log->$method(new $class(null));
+					$this->log->$method(new $class());
 			}
 
 		}
