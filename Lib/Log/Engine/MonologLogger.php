@@ -8,14 +8,14 @@ class MonologLogger implements CakeLogInterface {
 
 	public $search = null;
 
-	private $__config = array(
+	public $defaults = array(
 		'channel' => 'monolog',
 		'handlers' => array(),
 		'processors' => array()
 	);
 
 	public function __construct($options = array()) {
-		extract(array_merge($this->__config, $options));
+		extract(array_merge($this->defaults, $options));
 		if (!isset($search) || empty($search) || !is_dir($search)) {
 			$search = dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'vendor' . DS;
 		}
