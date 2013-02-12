@@ -6,8 +6,6 @@ use Monolog\Logger;
 
 class MonologLogger implements CakeLogInterface {
 
-	public $search = null;
-
 	public $defaults = array(
 		'channel' => 'monolog',
 		'handlers' => array(),
