@@ -59,4 +59,25 @@ class MonologLoggerTest extends CakeTestCase {
 		$this->assertTrue(file_exists($this->logs . $this->rotate . '.log'));
 	}
 
+	public function testWritingWithSimilarConfigThanCake() {
+		$options = array(
+			'channel' => 'app',
+			'handlers' => array(
+				'Stream' => array(
+					$this->logs . 'error.log',
+					'formatters' => array(
+						'Line' => array("%datetime% %level_name%: %message%\n")
+					)
+				)
+			)
+		);
+
+		$log = new MonologLogger($options);
+
+		$log->write('warning', 'Test warning');
+		$this->assertTrue(file_exists($this->logs . 'error.log'));
+
+		$result = file_get_contents($this->logs . 'error.log');
+		$this->assertRegExp('/^2[0-9]{3}-[0-9]+-[0-9]+ [0-9]+:[0-9]+:[0-9]+ WARNING: Test warning/', $result);
+	}
 }
