@@ -77,6 +77,12 @@ class MonologLogger implements CakeLogInterface {
 		$class = $name;
 		if (strpos($class, $type) === false) {
 			$class = "\Monolog\\$type\\$name$type";
+		} else if (isset($params['search'])) {
+			if (strpos($params['search'], '.php') === false) {
+				$params['search'] .= DS . $class . '.php';
+			}
+			include $params['search'];
+			unset($params['search']);
 		}
 
 		if ('Handler' === $type) {
