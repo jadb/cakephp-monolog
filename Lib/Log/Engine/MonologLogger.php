@@ -27,8 +27,8 @@ class MonologLogger implements CakeLogInterface {
 		include $search . 'autoload.php';
 
 		$this->log = new Logger($channel);
-		$this->__push($handlers);
-		$this->__push($processors, 'Processor');
+		$this->__push($this->log, $handlers);
+		$this->__push($this->log, $processors, 'Processor');
 	}
 
 	public function write($level, $message) {
@@ -54,7 +54,7 @@ class MonologLogger implements CakeLogInterface {
 		$this->log->$level($message);
 	}
 
-	private function __push($list, $type = 'Handler') {
+	private function __push($object, $list, $type = 'Handler') {
 		if (empty($list)) {
 			if ('Handler' == $type) {
 				$list = array('Stream' => array(LOGS . 'monolog.log'));
@@ -67,38 +67,67 @@ class MonologLogger implements CakeLogInterface {
 				$params = array();
 			}
 
-			$class = $name;
-			if (strpos($class, $type) === false) {
-				$class = "\Monolog\\$type\\$name$type";
+			$this->__run($object, $name, $type, $params);
+		}
+	}
+
+	private function __run($object, $name, $type, $params) {
+		$extras = array('formatters', 'processors');
+
+		$class = $name;
+		if (strpos($class, $type) === false) {
+			$class = "\Monolog\\$type\\$name$type";
+		}
+
+		if ('Handler' === $type) {
+			foreach ($extras as $k) {
+				if (isset($params[$k])) {
+					$$k = $params[$k];
+					unset($params[$k]);
+				}
 			}
+		}
 
-			$method = "push$type";
+		$method = "push$type";
+		if ('Formatter' === $type) {
+			$method = 'setFormatter';
+		}
 
-			switch(count($params)) {
-				case 1:
-					$this->log->$method(new $class($params[0]));
-				break;
+		switch(count($params)) {
+			case 1:
+				$_class = new $class($params[0]);
+				$object->$method($_class);
+			break;
 
-				case 2:
-					$this->log->$method(new $class($params[0], $params[1]));
-				break;
+			case 2:
+				$_class = new $class($params[0], $params[1]);
+				$object->$method($_class);
+			break;
 
-				case 3:
-					$this->log->$method(new $class($params[0], $params[1], $params[2]));
-				break;
+			case 3:
+				$_class = new $class($params[0], $params[1], $params[2]);
+				$object->$method($_class);
+			break;
 
-				case 4:
-					$this->log->$method(new $class($params[0], $params[1], $params[2], $params[3]));
-				break;
+			case 4:
+				$_class = new $class($params[0], $params[1], $params[2], $params[3]);
+				$object->$method($_class);
+			break;
 
-				case 5:
-					$this->log->$method(new $class($params[0], $params[1], $params[2], $params[3], $params[4]));
-				break;
+			case 5:
+				$_class = new $class($params[0], $params[1], $params[2], $params[3], $params[4]);
+				$object->$method($_class);
+			break;
 
-				default:
-					$this->log->$method(new $class());
+			default:
+				$_class = new $class();
+				$object->$method($_class);
+		}
+
+		foreach ($extras as $k) {
+			if (!empty($$k)) {
+				$this->__push($_class, (array) $$k, ucfirst(substr($k, 0, strlen($k) - 1)));
 			}
-
 		}
 	}
 }
