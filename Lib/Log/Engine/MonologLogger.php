@@ -81,7 +81,7 @@ class MonologLogger implements CakeLogInterface {
 			if (strpos($params['search'], '.php') === false) {
 				$params['search'] .= DS . $class . '.php';
 			}
-			include $params['search'];
+			require_once $params['search'];
 			unset($params['search']);
 		}
 
