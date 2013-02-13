@@ -15,7 +15,13 @@ class MonologLogger implements CakeLogInterface {
 	public function __construct($options = array()) {
 		extract(array_merge($this->defaults, $options));
 		if (!isset($search) || empty($search) || !is_dir($search)) {
-			$search = dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'vendor' . DS;
+			$search = dirname(dirname(dirname(CakePlugin::path('Monolog')))) . DS . 'vendor' . DS;
+			if (!is_dir($search . 'monolog')) {
+				$search = $search = dirname(dirname(dirname(dirname(__FILE__)))) . DS . 'vendor' . DS;
+				if (!is_dir($search . 'monolog')) {
+					throw new Exception("Missing the monolog/monolog composer package.");
+				}
+			}
 		}
 
 		include $search . 'autoload.php';
