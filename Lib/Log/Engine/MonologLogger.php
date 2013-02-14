@@ -1,10 +1,10 @@
 <?php
-App::uses('CakeLogInterface', 'Log');
+App::uses('BaseLog', 'Log/Engine');
 App::uses('String', 'Utility');
 
 use Monolog\Logger;
 
-class MonologLogger implements CakeLogInterface {
+class MonologLogger extends BaseLog {
 
 	public $defaults = array(
 		'channel' => 'monolog',
@@ -12,8 +12,9 @@ class MonologLogger implements CakeLogInterface {
 		'processors' => array()
 	);
 
-	public function __construct($options = array()) {
-		extract(array_merge($this->defaults, $options));
+	public function __construct($config = array()) {
+		parent::__construct(array_merge($this->defaults, $config));
+		extract($this->_config);
 		if (!isset($search) || empty($search) || !is_dir($search)) {
 			$search = dirname(dirname(dirname(CakePlugin::path('Monolog')))) . DS . 'vendor' . DS;
 			if (!is_dir($search . 'monolog')) {
