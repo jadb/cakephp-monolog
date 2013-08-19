@@ -100,6 +100,8 @@ class MonologLogger extends BaseLog {
 			$method = 'setFormatter';
 		}
 
+		$params = array_values($params);
+
 		switch(count($params)) {
 			case 1:
 				$_class = new $class($params[0]);
