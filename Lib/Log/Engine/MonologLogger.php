@@ -4,7 +4,7 @@ App::uses('String', 'Utility');
 
 use Monolog\Logger;
 
-class MonologLogger extends BaseLog {
+class MonologLog extends BaseLog {
 
 	public $defaults = array(
 		'channel' => 'monolog',
