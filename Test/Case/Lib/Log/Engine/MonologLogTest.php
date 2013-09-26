@@ -1,9 +1,9 @@
 <?php
-App::uses('MonologLogger', 'Monolog.Log/Engine');
+App::uses('MonologLog', 'Monolog.Log/Engine');
 
 use Monolog\Logger;
 
-class MonologLoggerTest extends CakeTestCase {
+class MonologLogTest extends CakeTestCase {
 
 	public $logs = null;
 
@@ -28,7 +28,7 @@ class MonologLoggerTest extends CakeTestCase {
 
 	public function testWritingWithDefaultHandler() {
 		$filename = $this->logs . 'monolog.log';
-		$log = new MonologLogger();
+		$log = new MonologLog();
 		$log->write('warning', 'Test warning');
 		$this->assertTrue(file_exists($filename));
 
@@ -46,7 +46,7 @@ class MonologLoggerTest extends CakeTestCase {
 			'processors' => array('Web')
 		);
 
-		$log = new MonologLogger($options);
+		$log = new MonologLog($options);
 
 		$log->write('warning', 'Test warning');
 		$this->assertTrue(file_exists($this->logs . 'error.log'));
@@ -72,7 +72,7 @@ class MonologLoggerTest extends CakeTestCase {
 			)
 		);
 
-		$log = new MonologLogger($options);
+		$log = new MonologLog($options);
 
 		$log->write('warning', 'Test warning');
 		$this->assertTrue(file_exists($this->logs . 'error.log'));
