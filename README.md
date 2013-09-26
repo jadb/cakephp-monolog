@@ -53,6 +53,8 @@ CakeLog::config('debug', array(
 ));
 ```
 
+Note that with CakePHP versions < 2.4 the engine name should instead be `Monolog.MonologLog`.
+
 Simple, no? But let's really do some serious logging, otherwise why bother moving away from the
 default [CakePHP logging][5] system?
 
