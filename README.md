@@ -40,7 +40,7 @@ example), would look something like this:
 CakePlugin::load('Monolog');
 
 CakeLog::config('debug', array(
-	'engine' => 'Monolog.MonologLogger',
+	'engine' => 'Monolog.Monolog',
 	'channel' => 'app',
 	'handlers' => array(
 		'Stream' => array(
@@ -64,7 +64,7 @@ The example below shows how to setup:
 
 ```
 CakeLog::config('logstash', array(
-	'engine' => 'Monolog.MonologLogger',
+	'engine' => 'Monolog.Monolog',
 	'channel' => 'app',
 	'handlers' => array(
 		'RotatingFile' => array(
