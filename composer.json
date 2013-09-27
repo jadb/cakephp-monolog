@@ -22,7 +22,7 @@
     },
     "require": {
         "php": ">=5.3.0",
-        "monolog/monolog": "1.4.*",
+        "monolog/monolog": "1.6.*",
         "composer/installers": "*"
     }
 }
