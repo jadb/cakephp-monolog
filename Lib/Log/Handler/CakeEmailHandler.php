@@ -45,7 +45,11 @@ class CakeEmailHandler extends \Monolog\Handler\MailHandler {
      * {@inheritdoc}
      */
     public function send($content, array $records) {
-        \CakeEmail::deliver($this->_to, $this->_subject, $content, $this->_config);
+        $email = 'CakeEmail';
+        if (Configure::check('Email.classname')) {
+            $email = Configure::read('Email.classname');
+        }
+        $email::deliver($this->_to, $this->_subject, $content, $this->_config);
     }
 
 }
