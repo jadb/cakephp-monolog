@@ -40,7 +40,7 @@ example), would look something like this:
 CakePlugin::load('Monolog');
 
 CakeLog::config('debug', array(
-	'engine' => 'Monolog.MonologLogger',
+	'engine' => 'Monolog.Monolog',
 	'channel' => 'app',
 	'handlers' => array(
 		'Stream' => array(
@@ -53,6 +53,8 @@ CakeLog::config('debug', array(
 ));
 ```
 
+Note that with CakePHP versions < 2.4 the engine name should instead be `Monolog.MonologLog`.
+
 Simple, no? But let's really do some serious logging, otherwise why bother moving away from the
 default [CakePHP logging][5] system?
 
@@ -64,7 +66,7 @@ The example below shows how to setup:
 
 ```
 CakeLog::config('logstash', array(
-	'engine' => 'Monolog.MonologLogger',
+	'engine' => 'Monolog.Monolog',
 	'channel' => 'app',
 	'handlers' => array(
 		'RotatingFile' => array(

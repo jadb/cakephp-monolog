@@ -4,7 +4,7 @@ App::uses('String', 'Utility');
 
 use Monolog\Logger;
 
-class MonologLogger extends BaseLog {
+class MonologLog extends BaseLog {
 
 	public $defaults = array(
 		'channel' => 'monolog',
@@ -15,6 +15,17 @@ class MonologLogger extends BaseLog {
 	public function __construct($config = array()) {
 		parent::__construct(array_merge($this->defaults, $config));
 		extract($this->_config);
+
+		if ( ! class_exists('Monolog\Logger'))
+			$this->includeMonolog();
+
+		$this->log = new Logger($channel);
+		$this->__push($this->log, $handlers);
+		$this->__push($this->log, $processors, 'Processor');
+	}
+
+	private function includeMonolog()
+	{
 		if (!isset($search) || empty($search) || !is_dir($search)) {
 			$search = dirname(dirname(dirname(CakePlugin::path('Monolog')))) . DS . 'vendor' . DS;
 			if (!is_dir($search . 'monolog')) {
@@ -26,10 +37,6 @@ class MonologLogger extends BaseLog {
 		}
 
 		include $search . 'autoload.php';
-
-		$this->log = new Logger($channel);
-		$this->__push($this->log, $handlers);
-		$this->__push($this->log, $processors, 'Processor');
 	}
 
 	public function write($level, $message) {
