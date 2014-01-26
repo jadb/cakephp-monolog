@@ -1,0 +1,43 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+
+env:
+  - CAKE_VERSION=master
+  - CAKE_VERSION=2.4.1
+
+before_script:
+  - composer install
+  - mysql -e 'CREATE DATABASE cakephp_test;'
+  - git clone git://github.com/cakephp/cakephp ../cakephp && cd ../cakephp && git checkout $CAKE_VERSION
+  - cp -R ../cakephp-monolog plugins/Monolog
+  - chmod -R 777 ../cakephp/app/tmp
+  - set +H
+  - echo "<?php
+    class DATABASE_CONFIG {
+    public \$default = array(
+      'persistent' => false,
+      'host' => '0.0.0.0',
+      'login' => 'travis',
+      'password' => '',
+      'database' => 'cakephp_test',
+      'prefix' => ''
+    );
+    public \$test = array(
+      'persistent' => false,
+      'host' => '0.0.0.0',
+      'login' => 'travis',
+      'password' => '',
+      'database' => 'cakephp_test',
+      'prefix' => ''
+    );
+    }" > ../cakephp/app/Config/database.php
+
+script:
+  - ./lib/Cake/Console/cake test Monolog Lib/Log/Engine/MonologLog --stderr
+
+notifications:
+  email: false

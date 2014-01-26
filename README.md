@@ -1,3 +1,5 @@
+[![Build Status](https://secure.travis-ci.org/jadb/cakephp-monolog.png?branch=master)](http://travis-ci.org/jadb/cakephp-monolog)
+
 # CakePHP Monolog Plugin
 
 Despite the very advanced logging system offered in [CakePHP][1], I still would have had to write
