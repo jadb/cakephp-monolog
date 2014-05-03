@@ -109,8 +109,8 @@ class MonologLog extends BaseLog {
 
 		$params = array_values($params);
 
-		$class_reflector = new ReflectionClass($class);
-		$_class = $class_reflector->newInstanceArgs($params);
+		$classReflector = new ReflectionClass($class);
+		$_class = $classReflector->newInstanceArgs($params);
 		$object->$method($_class);
 
 		foreach ($extras as $k) {
