@@ -109,36 +109,9 @@ class MonologLog extends BaseLog {
 
 		$params = array_values($params);
 
-		switch(count($params)) {
-			case 1:
-				$_class = new $class($params[0]);
-				$object->$method($_class);
-			break;
-
-			case 2:
-				$_class = new $class($params[0], $params[1]);
-				$object->$method($_class);
-			break;
-
-			case 3:
-				$_class = new $class($params[0], $params[1], $params[2]);
-				$object->$method($_class);
-			break;
-
-			case 4:
-				$_class = new $class($params[0], $params[1], $params[2], $params[3]);
-				$object->$method($_class);
-			break;
-
-			case 5:
-				$_class = new $class($params[0], $params[1], $params[2], $params[3], $params[4]);
-				$object->$method($_class);
-			break;
-
-			default:
-				$_class = new $class();
-				$object->$method($_class);
-		}
+		$classReflector = new ReflectionClass($class);
+		$_class = $classReflector->newInstanceArgs($params);
+		$object->$method($_class);
 
 		foreach ($extras as $k) {
 			if (!empty($$k)) {
