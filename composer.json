@@ -1,5 +1,5 @@
 {
-    "name": "cakephp/monolog",
+    "name": "jadb/cakephp-monolog",
     "description": "CakePHP Monolog Plugin",
     "type": "cakephp-plugin",
     "keywords": ["cakephp", "monolog", "plugin"],

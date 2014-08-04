@@ -6,6 +6,8 @@ Despite the very advanced logging system offered in [CakePHP][1], I still would 
 a lot more code to be able to handle logs the way I needed. To write the least code possible, I
 chose to go with the popular monolog library.
 
+> __NOTE__ The package name changed to jadb/cakephp-monolog, to not violate the cakephp namespace.
+
 ## Install
 
 Because [monolog][2] is a [composer][3] [package][4] and to avoid having to manually write a lot of
