@@ -1,6 +1,7 @@
 {
     "name": "jadb/cakephp-monolog",
     "description": "CakePHP Monolog Plugin",
+    "version": "2.0.0",
     "type": "cakephp-plugin",
     "keywords": ["cakephp", "monolog", "plugin"],
     "homepage": "https://github.com/jadb/cakephp-monolog",
