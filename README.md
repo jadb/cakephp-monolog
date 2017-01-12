@@ -33,14 +33,14 @@ That's it! You should now be ready to start configuring your channels.
 Start by creating a logging configuration file (i.e. `app/Config/log.php`) that you will include early
 in your `app/Config/bootstrap.php`:
 
-```
+```php
 include 'log.php';
 ```
 
 A basic configuration, to replicate what Cake does but using Monolog (to give you a good starting
 example), would look something like this:
 
-```
+```php
 CakePlugin::load('Monolog');
 
 CakeLog::config('debug', array(
@@ -68,7 +68,7 @@ The example below shows how to setup:
 * normal log file with much more details about the request
 * email notifications for critical and alert levels including only the error message
 
-```
+```php
 CakeLog::config('logstash', array(
 	'engine' => 'Monolog.Monolog',
 	'channel' => 'app',
